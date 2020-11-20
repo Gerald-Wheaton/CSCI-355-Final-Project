@@ -11,7 +11,6 @@ The functions should return a string with the SQL statement
   public static String FunctionName(
     String operation, String tableName, String [] specifiedColumns, String [] specified Values) {
     ...//
-    ...//
     return "INSERT INTO <specified_table> (<specified_column1>,<specified_column2>,<specified_column3>,...) VALUES (<specified_value1>,<specified_value2>);"
   }
 ```
