@@ -19,8 +19,12 @@ The switch statement will take the returned string and pass it to the mySQL serv
   ex:
    ```
    Switch(tableName) {
+   ...//
+   
    case "GENRE":
     stmt.executeQuery(FunctionName(...//))
     break;
+    
+   ...// 
    }
    ```
