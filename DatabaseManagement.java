@@ -27,6 +27,7 @@ public class DatabaseManagement { // Save as "JdbcSelectTest.java" (JDK 7 and ab
         Scanner input = new Scanner(System.in);
         String tables[] = { "genre", "movie", "profile", "typeof", "useraccount", "viewmovie" };
         String operations[] = { "select", "insert", "update", "delete" };
+        String sqlStatement = "SELECT * FROM GENRE";
 
         Stack<String> columns = new Stack<String>();
         Stack<String> values = new Stack<String>();
@@ -46,7 +47,7 @@ public class DatabaseManagement { // Save as "JdbcSelectTest.java" (JDK 7 and ab
         if (!table.contains(tableToModify)) {
             error = true;
             while (error) {
-                System.out.println("\nPlease select a valid table");
+                System.out.print("\nPlease select a valid table ");
                 tableToModify = input.nextLine().toLowerCase();
                 if (!table.contains(tableToModify)) {
                     error = true;
@@ -57,15 +58,15 @@ public class DatabaseManagement { // Save as "JdbcSelectTest.java" (JDK 7 and ab
         }
 
         // What opperation
-        System.out.print("\nWhat operation would you like to perform: ");
+        System.out.print("\nWhat operation would you like to perform on table '" + tableToModify + "': ");
         String operation = input.nextLine().toLowerCase();
-        List oplist = Arrays.asList(operations);
-        if (!oplist.contains(operation)) {
+        List opList = Arrays.asList(operations);
+        if (!opList.contains(operation)) {
             error = true;
             while (error) {
-                System.out.println("\nPlease select a valid operation");
+                System.out.print("\nPlease select a valid operation ");
                 operation = input.nextLine().toLowerCase();
-                if (!oplist.contains(operation)) {
+                if (!opList.contains(operation)) {
                     error = true;
                 } else {
                     error = false;
@@ -74,11 +75,13 @@ public class DatabaseManagement { // Save as "JdbcSelectTest.java" (JDK 7 and ab
         }
 
         switch (operation) {
-            // If insert
+            // since INSERT and UPDATE require the same values I just smashed them together
             case "insert":
+            case "update":
+                hasNext = true;
                 int numColumns = 0;
 
-                System.out.print("Please enter the column names one at a time\nColumn name: ");
+                System.out.print("Please enter the columns you want to modify one at a time\nColumn name: ");
                 columns.push(input.nextLine());
                 numColumns++;
 
@@ -102,27 +105,53 @@ public class DatabaseManagement { // Save as "JdbcSelectTest.java" (JDK 7 and ab
                     values.push(input.nextLine());
                     numColumns--;
                 }
-
-                // Call specified table modification funciton
                 break;
 
-            // If update
-            // Which column to update
-            // What value to replace
-            // On what condition make update?
+            case "delete":
+                break;
 
-            // If delete
-            // On what condition
-            // Where ? = ?
+            case "select":
+                hasNext = true;
+                System.out.print("Please enter the columns one at a time that you would like to select from "
+                        + tableToModify + "\nColumn name: ");
+                columns.push(input.nextLine());
 
-            // If select
-            // While has nextLine() = what want?
+                while (hasNext) {
+                    System.out.print("\nColumn name: ");
+                    String colName = input.nextLine();
+                    if (colName.equals("")) {
+                        hasNext = false;
+                        break;
+                    }
+                    columns.push(colName);
+                }
+                break;
+        }
+
+        switch (tableToModify) {
+            case "genre":
+                // sqlStatement = genreModificationFunction (operation, columns, values)
+                // execute
+                break;
+            case "movie":
+                // sqlStatement = genreModificationFunction (operation, columns, values)
+                break;
+            case "profile":
+                // sqlStatement = genreModificationFunction (operation, columns, values)
+                break;
+            case "typeof":
+                // sqlStatement = genreModificationFunction (operation, columns, values)
+                break;
+            case "useraccount":
+                // sqlStatement = genreModificationFunction (operation, columns, values)
+                break;
+            case "viewmovie":
+                // sqlStatement = genreModificationFunction (operation, columns, values)
+                break;
         }
 
         input.close();
     }
 
-    // TODO: insert functions that return an sql statment as a string
-
-    // public static String userAccountModify(String) {}
+    // TODO: declare functions that return an sql statment as a string
 }
