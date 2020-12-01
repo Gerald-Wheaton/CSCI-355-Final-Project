@@ -16,8 +16,8 @@ public class genreCrud{
 	String password = "applesauce";
 	
 
-	try {
-    Connection conn = DriverManager.getConnection(dbURL, username, password);
+  try {
+    	Connection conn = DriverManager.getConnection(dbURL, username, password);
 
 		if (conn != null) {
 			System.out.println("Connected");
@@ -26,6 +26,8 @@ public class genreCrud{
     System.Out.println ("Choose the number for the operation to perform. \n\n 1.Create 2.Read 3.Update 4.Delete\n");
     int userInput = input.nextInt();
     String info;
+    int infoN;
+	  
 
     switch(userInput) {
       case 1:
@@ -51,12 +53,12 @@ public class genreCrud{
         int count = 0;
  
         while (result.next()){
-          String profID = result.getString(1);
-          String profName = result.getString(2);
-          String acc = result.getString(3);
+          String id = result.getString(1);
+          String genre = result.getString(2);
+         
  
-          String output = "User #%d: %s";
-          System.out.println(String.format(output, id, genre));
+          String output = "Genre #%d:%s - %s";
+          System.out.println(String.format(output,++count, id, genre));
         }   
       break;
       case 3:
@@ -65,7 +67,15 @@ public class genreCrud{
         PreparedStatement Updatestatement = conn.prepareStatement(Updatesql);
         System.Out.println ("What is the genre id to update?\n");
         info = input.next();
-        Updatestatement.setString(2, info);
+	 try
+            {
+            infoN=Integer.parseInt(info);
+            }
+         catch(NumberFormatException e)
+            {
+            System.out.println("Please input an ID number");
+            }
+        Updatestatement.setString(2, infoN);
         System.Out.println ("Update genre\n");
         info = input.next();
         Updatestatement.setString(1, info);
@@ -82,7 +92,15 @@ public class genreCrud{
         PreparedStatement Deletestatement = conn.prepareStatement(Deletesql);
         System.Out.println ("What is the genre id of the genre to delete?\n");
         info = input.next();
-        Deletestatement.setString(1, info);
+	 try
+	    {
+            infoN=Integer.parseInt(info);
+            }
+         catch(NumberFormatException e)
+            {
+            System.out.println("Please input an ID number");
+            } 
+        Deletestatement.setString(1, infoN);
  
         int rowsDeleted = Deletestatement.executeUpdate();
         if (rowsDeleted > 0) {
