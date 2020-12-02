@@ -1,5 +1,5 @@
 
-// Schepisi, Group 2
+// Gerald, Group 2
 import javax.net.ssl.SSLException;
 import java.sql.*;
 
